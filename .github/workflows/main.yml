@@ -1,0 +1,28 @@
+name: Indian FO Trader Live Bot
+
+on:
+  schedule:
+    # આ સમય દર 30 મિનિટે માર્કેટ અવર્સ દરમિયાન ઓટોમેટિક રન થશે
+    - cron: '*/30 3-10 * * 1-5'
+  workflow_dispatch:
+
+jobs:
+  run-trader:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests
+
+      - name: Run Trading Bot Script
+        run: |
+          python indian_fo_trader.py
